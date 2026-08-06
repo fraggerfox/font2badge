@@ -1,0 +1,37 @@
+[project]
+name = "stripshaper"
+version = "0.1.0"
+description = "Render text with raw outline fonts into LED badge strip PNGs (HarfBuzz-shaped, self-scaled)"
+requires-python = ">=3.12"
+dependencies = [
+    "numpy",
+    "pillow",
+    "freetype-py",
+    "uharfbuzz",
+]
+
+[project.scripts]
+stripshaper = "stripshaper.cli:main"
+
+[dependency-groups]
+dev = [
+    "black",
+    # ruff comes from nixpkgs (the pip wheel is dynamically linked and
+    # does not run on NixOS); its config below applies either way.
+]
+
+[tool.black]
+line-length = 88
+target-version = ["py312"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py312"
+
+[tool.ruff.lint]
+# PEP 8 (pycodestyle E/W), pyflakes (F), import sorting (I), pyupgrade (UP)
+select = ["E", "F", "W", "I", "UP"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
