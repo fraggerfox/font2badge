@@ -36,6 +36,8 @@ pixelshaper when the thresholding artifacts start to bother you.
 ## Usage
 
 ```sh
+git clone https://github.com/fraggerfox/font2badge
+cd font2badge
 nix develop                          # uv dev shell, venv activated
 font2badge <font.ttf> "<text>" [flags]
 ```
