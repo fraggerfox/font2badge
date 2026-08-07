@@ -143,6 +143,27 @@ k8x12-0f8af4f6.png (29x11, ppem 12.0)
 
 <img src="examples/k8x12-keralam-native@8x.png" alt="Keralam in k8x12 at native 12 ppem, 1-bit">
 
+TerminalVector, same treatment — a 12 px terminal font whose ascent
+uses 10 of the 11 rows:
+
+```
+$ font2badge TerminalVector.ttf "Keralam" --ppem 12 --mono --dots
+terminalvector-keralam-native.png (57x11, ppem 12.0)
+·························································
+·●●●··●●··························●●●●···················
+··●●··●●····························●●···················
+··●●·●●·····························●●···················
+··●●·●●···●●●●···●●●·●●···●●●●······●●····●●●●···●●●●●●··
+··●●●●···●●··●●···●●·●●●·····●●·····●●·······●●··●●·●·●●·
+··●●·●●··●●●●●●···●●●·●●··●●●●●·····●●····●●●●●··●●·●·●●·
+··●●·●●··●●·······●●·····●●··●●·····●●···●●··●●··●●·●·●●·
+··●●··●●·●●··●●···●●·····●●··●●·····●●···●●··●●··●●·●·●●·
+·●●●··●●··●●●●···●●●●·····●●●·●●··●●●●●●··●●●·●●·●●···●●·
+·························································
+```
+
+<img src="examples/terminalvector-keralam-native@8x.png" alt="Keralam in TerminalVector at native 12 ppem, 1-bit">
+
 ### A different badge height
 
 The strip height follows `-H`; the same word simply self-scales bigger

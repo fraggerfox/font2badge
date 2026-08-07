@@ -13,6 +13,7 @@ font2badge "$MANJARI" "കേരളം" -o manjari-keralam.png
 font2badge "$FT/NotoSansMalayalam-Regular.ttf" "നമസ്കാരം" -o noto-namaskaram.png
 font2badge "$FT/Nupuram-Dots.ttf" "കേരളം" -t 0.25 -o nupuram-dots-keralam.png
 font2badge "$FT/k8x12.ttf" "Keralam" --ppem 12 --mono -o k8x12-keralam-native.png
+font2badge "$FT/TerminalVector.ttf" "Keralam" --ppem 12 --mono -o terminalvector-keralam-native.png
 font2badge "$MANJARI" "കേരളം" -H 16 -o manjari-keralam-h16.png
 font2badge "$MUKTA" "केरलम" --ppem 9 -o mukta-keralam-ppem9.png
 
