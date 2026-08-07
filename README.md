@@ -17,34 +17,115 @@ pixelshaper when the thresholding artifacts start to bother you.
 ## Usage
 
 ```sh
-nix develop            # uv dev shell, venv activated
-
-# Malayalam, self-scaled so the message's ink fills all 11 rows
-font2badge fonts/Manjari-Regular.ttf "പക്ഷി വാഴ" --dots
-
-# a different badge? set its pixel height
-font2badge fonts/Manjari-Regular.ttf "കേരളം" -H 16
-
-# dotted fonts need a lower threshold or the dots vanish
-font2badge fonts/Nupuram-Dots.ttf "കേരളം" -t 0.25
-
-# true pixel fonts: render at native size, 1-bit
-font2badge fonts/k8x12.ttf "Keralam" --ppem 12 --mono
-
-# pin ppem for a fair A/B against a pixel font of that size
-font2badge fonts/Mukta-Regular.ttf "केरलम" --ppem 9
+nix develop                          # uv dev shell, venv activated
+font2badge <font.ttf> "<text>" [flags]
 ```
 
-Flags: `-H/--height` strip height in px (default 11, the FOSSASIA LS32
-badge), `-t/--threshold` on/off cut (default 0.5), `--ppem` to pin the
-size instead of self-scaling, `--mono` for 1-bit rendering of true
-pixel fonts, `--dots` to print the strip as ●/· rows in the terminal,
-`-o` for the output path (default `<font>-<md5:8>.png`).
-
-Push the result to the badge:
+The PNG lands in the current directory as `<font>-<md5:8>.png` unless
+`-o` says otherwise. Push it to the badge with:
 
 ```sh
 python3 lednamebadge.py -s 4 -m 4 strip.png   # mode 4 = still-centered
+```
+
+## Flags
+
+| Flag | Default | Meaning |
+|------|---------|---------|
+| `-o`, `--out PATH` | `<font>-<md5:8>.png` | output PNG path |
+| `-H`, `--height N` | 11 | strip height in px — set to your badge's row count (11 = FOSSASIA LS32) |
+| `-t`, `--threshold F` | 0.5 | on/off cut as a fraction of peak gray; dotted fonts need ~0.25 |
+| `--ppem N` | self-scale | pin the pixel size instead of scaling the ink span to the strip |
+| `--mono` | off | 1-bit FreeType raster for true pixel fonts at native `--ppem`; ignores `--threshold` |
+| `--dots` | off | also print the strip as ●/· rows in the terminal |
+
+`WARNING: N ink pixels fell outside the strip` on stderr means faint
+antialiased fringe (or, with `--ppem` pinned too high, real ink) was
+clipped at the strip edges — a handful of pixels is normal for
+self-scaled renders.
+
+## Examples
+
+All run against the fonts used in the pixelshaper examples; outputs are
+verbatim.
+
+### Malayalam, self-scaled — the default
+
+The message's own ink span is stretched to all 11 rows (ppem 16.9 for
+this word), conjuncts and matras shaped by HarfBuzz:
+
+```
+$ font2badge Manjari-Regular.ttf "കേരളം" --dots
+WARNING: 18 ink pixels fell outside the strip
+manjari-regular-5f09f872.png (53x11, ppem 16.9)
+··●●●●●·······●●●●·········●●●●●●·····●●●●●●·········
+·●●·●·●······●●···●·······●●····●●···●●·····●········
+·●··●·●······●····●●·····●●··●●●●●●··●●●●···●········
+·●···●····●●●●●●●●●●●●···●···●···●●··●··●··●●···●●●··
+·●···●●··●●··●····●●·●●··●··●●····●··●··●··●●··●··●●·
+·●●·●·●··●···●····●···●··●··●●····●···●●●···●●·●···●·
+··●·●·●●·●··●●●··●●··●●··●●··●···●●·········●··●··●●·
+···●●●●···●●●·●●●●·●●●····●●··●●●●···●●●●●●●●···●●●··
+·····································●···············
+·····································●●●●●●●●········
+·······································●●●●●●········
+```
+
+Any text HarfBuzz can shape works the same way:
+
+```
+$ font2badge NotoSansMalayalam-Regular.ttf "നമസ്കാരം"
+notosansmalayalam-regular-de79fb4b.png (74x11, ppem 13.3)
+```
+
+### Dotted fonts — lower the threshold
+
+Nupuram Dots' strokes are made of dots that never reach full gray
+coverage; at the default 0.5 cut they vanish. `-t 0.25` keeps them:
+
+```
+$ font2badge Nupuram-Dots.ttf "കേരളം" -t 0.25
+nupuram-dots-5f09f872.png (47x11, ppem 12.6)
+```
+
+### True pixel fonts — render on their native grid
+
+Self-scaling a pixel font resamples it off its design grid and smears
+the strokes. Pin its native size and use the 1-bit rasterizer instead:
+
+```
+$ font2badge k8x12.ttf "Keralam" --ppem 12 --mono --dots
+k8x12-0f8af4f6.png (29x11, ppem 12.0)
+·····························
+·●·●·············●●··········
+·●·●··············●··········
+·●·●··············●··········
+·●●···●··●·●·●●···●··●●··●●··
+·●●··●·●·●●····●··●····●·●●●·
+·●·●·●·●·●····●●··●···●●·●●●·
+·●·●·●●●·●···●·●··●··●·●·●●●·
+·●·●·●···●···●·●··●··●·●·●·●·
+·●·●··●●·●····●●··●···●●·●·●·
+·····························
+```
+
+### A different badge height
+
+The strip height follows `-H`; the same word simply self-scales bigger
+(24.5 ppem on a 16-row panel):
+
+```
+$ font2badge Manjari-Regular.ttf "കേരളം" -H 16
+manjari-regular-5f09f872.png (78x16, ppem 24.5)
+```
+
+### Fair A/B against a pixel font
+
+Pin the outline font to the pixel font's size so only the rendering
+differs, not the scale:
+
+```
+$ font2badge Mukta-Regular.ttf "केरलम" --ppem 9
 ```
 
 ## How it sizes
