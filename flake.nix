@@ -1,5 +1,5 @@
 {
-  description = "stripshaper — raw outline fonts to LED badge strip PNGs (uv dev shell)";
+  description = "font2badge — raw outline fonts to LED badge strip PNGs (uv dev shell)";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -33,9 +33,9 @@
             export UV_PYTHON=${pkgs.python313}/bin/python3.13
             uv sync 2>/dev/null || true
             source .venv/bin/activate
-            echo "stripshaper dev shell"
-            echo "  stripshaper <font.ttf> <text> [--dots]   # render a strip PNG"
-            echo "  stripshaper --help                       # all flags"
+            echo "font2badge dev shell"
+            echo "  font2badge <font.ttf> <text> [--dots]   # render a strip PNG"
+            echo "  font2badge --help                       # all flags"
             echo "  (after editing pyproject.toml, run 'uv sync' or use 'uv run')"
           '';
         };

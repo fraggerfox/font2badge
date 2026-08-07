@@ -1,5 +1,5 @@
 [project]
-name = "stripshaper"
+name = "font2badge"
 version = "0.1.0"
 description = "Render text with raw outline fonts into LED badge strip PNGs (HarfBuzz-shaped, self-scaled)"
 requires-python = ">=3.12"
@@ -11,7 +11,7 @@ dependencies = [
 ]
 
 [project.scripts]
-stripshaper = "stripshaper.cli:main"
+font2badge = "font2badge.cli:main"
 
 [dependency-groups]
 dev = [
