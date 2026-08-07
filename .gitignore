@@ -5,6 +5,7 @@ __pycache__/
 
 # Rendered strips
 *.png
+!examples/*.png
 
 # Nix
 .direnv/

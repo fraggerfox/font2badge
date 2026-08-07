@@ -47,7 +47,9 @@ self-scaled renders.
 ## Examples
 
 All run against the fonts used in the pixelshaper examples; outputs are
-verbatim.
+verbatim. The PNGs live in [examples/](examples/) — each shown below at
+8× nearest-neighbour zoom (the `@8x` copies; browsers blur-scale the
+real 11 px strips). Regenerate everything with `examples/generate.sh`.
 
 ### Malayalam, self-scaled — the default
 
@@ -71,6 +73,8 @@ manjari-regular-5f09f872.png (53x11, ppem 16.9)
 ·······································●●●●●●········
 ```
 
+<img src="examples/manjari-keralam@8x.png" alt="കേരളം in Manjari, self-scaled to 11 rows">
+
 Any text HarfBuzz can shape works the same way:
 
 ```
@@ -89,6 +93,8 @@ notosansmalayalam-regular-de79fb4b.png (74x11, ppem 13.3)
 ·●···●···●●··●·●···●●··●●··●····●···●··●··●···●···●··●··●●·●··●··●●··●··●·
 ··●··●···●···●●●●●●●●···●··●·····●●●···●●●●●●●●·●●···●●●●···●··●●●···●●●··
 ```
+
+<img src="examples/noto-namaskaram@8x.png" alt="നമസ്കാരം in Noto Sans Malayalam, self-scaled">
 
 ### Dotted fonts — lower the threshold
 
@@ -112,6 +118,8 @@ nupuram-dots-5f09f872.png (47x11, ppem 12.6)
 ·······························●●●●●●●●●·······
 ```
 
+<img src="examples/nupuram-dots-keralam@8x.png" alt="കേരളം in Nupuram Dots at threshold 0.25">
+
 ### True pixel fonts — render on their native grid
 
 Self-scaling a pixel font resamples it off its design grid and smears
@@ -132,6 +140,8 @@ k8x12-0f8af4f6.png (29x11, ppem 12.0)
 ·●·●··●●·●····●●··●···●●·●·●·
 ·····························
 ```
+
+<img src="examples/k8x12-keralam-native@8x.png" alt="Keralam in k8x12 at native 12 ppem, 1-bit">
 
 ### A different badge height
 
@@ -160,6 +170,8 @@ manjari-regular-5f09f872.png (78x16, ppem 24.5)
 ·······················································●●●●●●●●●●·············
 ```
 
+<img src="examples/manjari-keralam-h16@8x.png" alt="കേരളം in Manjari on a 16-row strip">
+
 ### Fair A/B against a pixel font
 
 Pin the outline font to the pixel font's size so only the rendering
@@ -180,6 +192,8 @@ mukta-regular-b4047c14.png (24x11, ppem 9.0)
 ························
 ························
 ```
+
+<img src="examples/mukta-keralam-ppem9@8x.png" alt="केरलम in Mukta pinned at 9 ppem">
 
 ## How it sizes
 
