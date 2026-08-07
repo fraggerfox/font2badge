@@ -1,5 +1,11 @@
 # font2badge
 
+> [!NOTE]
+> **AI-generated code.** This repository was developed with
+> [Claude Code](https://claude.com/claude-code): the code and
+> documentation are largely AI-generated, working under human direction
+> and review.
+
 Any font + some text → a badge-ready PNG. Shapes the text with HarfBuzz
 (conjuncts, matra reordering, mark positioning — Indic scripts come out
 right), rasterizes with FreeType, and writes a white-on-black strip PNG
@@ -13,6 +19,19 @@ one command from TTF to badge. Its sibling
 pipeline: it freezes the same intermediate bitmaps into an editable
 pixel font you can hand-tune glyph by glyph. Start here; graduate to
 pixelshaper when the thresholding artifacts start to bother you.
+
+## Contents
+
+- [Usage](#usage)
+- [Flags](#flags)
+  - [When to use `--mono`](#when-to-use---mono)
+- [Examples](#examples)
+  - [Malayalam, self-scaled — the default](#malayalam-self-scaled--the-default)
+  - [Dotted fonts — lower the threshold](#dotted-fonts--lower-the-threshold)
+  - [True pixel fonts — render on their native grid](#true-pixel-fonts--render-on-their-native-grid)
+  - [A different badge height](#a-different-badge-height)
+  - [Fair A/B against a pixel font](#fair-ab-against-a-pixel-font)
+- [How it sizes](#how-it-sizes)
 
 ## Usage
 
@@ -43,6 +62,28 @@ python3 lednamebadge.py -s 4 -m 4 strip.png   # mode 4 = still-centered
 antialiased fringe (or, with `--ppem` pinned too high, real ink) was
 clipped at the strip edges — a handful of pixels is normal for
 self-scaled renders.
+
+### When to use `--mono`
+
+`--mono` replaces grayscale-then-threshold with true 1-bit rendering: a
+pixel is on iff the outline covers its centre. The rule of thumb —
+**self-scaling + threshold for outline fonts, `--ppem <native> --mono`
+for pixel fonts**:
+
+- **Use it when the font *is* a pixel grid, rendered on that grid.**
+  k8x12, TerminalVector and pixelshaper-built fonts have outlines that
+  are stacks of pixel squares; at their native ppem each square lands on
+  exactly one device pixel, so 1-bit rendering reproduces the design
+  bit-for-bit. That's why `--mono` almost always travels with
+  `--ppem <native>`.
+- **Don't use it on ordinary outline fonts.** At LED sizes their strokes
+  are fractions of a pixel wide; mono makes a hard 50 %-coverage call
+  with no recourse, and thin strokes vanish outright (Nupuram Dots
+  disappears entirely — no single dot covers half a pixel). Grayscale +
+  `-t` gives you the dial that mono denies you.
+- **Don't combine it with self-scaling.** A fractional ppem puts even a
+  pixel font's squares astride device pixels; mono then drops half of
+  every straddling stroke — the worst of both worlds.
 
 ## Examples
 
