@@ -16,9 +16,15 @@ font2badge = "font2badge.cli:main"
 [dependency-groups]
 dev = [
     "black",
+    "pytest",
+    "pytest-cov",
     # ruff comes from nixpkgs (the pip wheel is dynamically linked and
     # does not run on NixOS); its config below applies either way.
 ]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--cov=font2badge --cov-report=term-missing"
 
 [tool.black]
 line-length = 88
