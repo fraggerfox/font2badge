@@ -41,6 +41,7 @@ def test_height_flag(monkeypatch, tmp_path):
 def test_dots_prints_the_strip(monkeypatch, tmp_path, capsys):
     run(monkeypatch, tmp_path, "ക", "--dots", "-o", "ka.png")
     out = capsys.readouterr().out
-    dot_rows = [line for line in out.splitlines() if set(line) <= {"●", "·"} and line]
+    cells = {"●", "·", " "}
+    dot_rows = [line for line in out.splitlines() if line and set(line) <= cells]
     assert len(dot_rows) == 11
     assert any("●" in row for row in dot_rows)

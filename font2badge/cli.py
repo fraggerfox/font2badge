@@ -57,7 +57,9 @@ def main():
     print(f"{out} ({bits.shape[1]}x{bits.shape[0]}, ppem {ppem:.1f})")
     if args.dots:
         for row in bits:
-            print("".join("●" if p else "·" for p in row))
+            # Two columns per pixel: terminal cells are ~2x taller than
+            # wide, so one char per pixel renders horizontally squished.
+            print(" ".join("●" if p else "·" for p in row))
 
 
 if __name__ == "__main__":
