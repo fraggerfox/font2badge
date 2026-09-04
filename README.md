@@ -272,3 +272,7 @@ The grayscale raster is cut to on/off at `--threshold` × peak gray.
 Antialiased curves hovering near the cut flip between 1 px and 2 px
 thick — that raggedness is inherent to thresholding outlines at LED
 sizes, and is exactly what pixelshaper's hand-tuned pixel fonts fix.
+
+## License
+
+[BSD 2-Clause](LICENSE)
